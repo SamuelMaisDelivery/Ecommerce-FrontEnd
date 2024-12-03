@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
@@ -12,16 +12,27 @@
       <div class="search-container">
         <input type="text" id="search-bar" placeholder="Pesquise aqui..." />
       </div>
+      <div class="filter-container">
+        <label for="sort-options">Ordenar por:</label>
+        <select id="sort-options" onchange="fetchPhotos()">
+          <option value="nome">Nome</option>
+          <option value="preco">Preço</option>
+        </select>
+      </div>
     </header>
     <main>
       <div class="gallery-container" id="gallery">
-        <!-- As imagens serão carregadas aqui -->
+        
       </div>
     </main>
     <footer>
       <h2>Total de Fotos = <span id="total-photos"></span></h2>
     </footer>
     <div id="app"></div>
+    <script type="module">
+      import { fetchPhotos } from './main.js';
+      window.fetchPhotos = fetchPhotos;
+    </script>
     <script type="module" src="/main.js"></script>
   </body> 
 </html>

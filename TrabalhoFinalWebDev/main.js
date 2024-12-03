@@ -4,13 +4,15 @@ import './style.css'
 const apiURL = 'http://localhost:8080/produto';
 
 // Função para buscar as fotos da API
-async function fetchPhotos() {
+export async function fetchPhotos() {
   try {
-    const response = await fetch(apiURL);
+    const sortOrder = document.getElementById('sort-options').value;
+    const urlWithParams = `http://localhost:8080/produto?order=${sortOrder}`;
+    const response = await fetch(urlWithParams);
     const photos = await response.json();
-    displayPhotos(photos.slice(0, 100));  // Exibe todas as fotos retornadas pela API
+    displayPhotos(photos.slice(0, 100));
   } catch (error) {
-    console.error('Erro ao carregar as fotos:', error);
+    console.error('Erro ao carregar os produtos:', error);
   }
 }
 
