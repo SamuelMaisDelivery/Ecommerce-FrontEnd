@@ -4,17 +4,34 @@ import './style.css'
 const apiURL = 'http://localhost:8080/produto';
 
 // Função para buscar as fotos da API
-export async function fetchPhotos() {
+export // Função para buscar as fotos da API
+async function fetchPhotos() {
   try {
+    // Obtém o critério de ordenação da combo box
     const sortOrder = document.getElementById('sort-options').value;
-    const urlWithParams = `http://localhost:8080/produto?order=${sortOrder}`;
-    const response = await fetch(urlWithParams);
+
+    // Captura o valor do campo de busca
+    const searchQuery = document.getElementById('search-bar').value;
+
+    // Monta a URL com os parâmetros de ordenação e filtro
+    let apiUrl = `${apiURL}?order=${sortOrder}`;
+
+    // Adiciona o parâmetro 'filter' se o campo de busca não estiver vazio
+    if (searchQuery) {
+      apiUrl += `&filter=${encodeURIComponent(searchQuery)}`;
+    }
+
+    // Faz a requisição à API com os parâmetros
+    const response = await fetch(apiUrl);
     const photos = await response.json();
-    displayPhotos(photos.slice(0, 100));
+
+    // Exibe as fotos na tela
+    displayPhotos(photos.slice(0, 100)); 
   } catch (error) {
     console.error('Erro ao carregar os produtos:', error);
   }
 }
+
 
 // Função para exibir as fotos na galeria
 function displayPhotos(photos) {
@@ -52,6 +69,8 @@ function displayPhotos(photos) {
     gallery.appendChild(photoContainer);
   });
 }
+
+document.getElementById('search-bar').addEventListener('input', fetchPhotos);
 
 // Chama a função ao carregar a página
 fetchPhotos();
